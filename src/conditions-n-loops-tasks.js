@@ -198,6 +198,7 @@ function convertToRomanNumerals(num) {
  */
 function convertNumberToString(numberStr) {
   let resultString = '';
+
   function symbol(char) {
     let strDigit;
     switch (char) {
@@ -264,8 +265,14 @@ function convertNumberToString(numberStr) {
  *  '0123210'   => true
  *  'qweqwe'    => false
  */
-function isPalindrome(/* str */) {
-  throw new Error('Not implemented');
+function isPalindrome(str) {
+  let result = true;
+  for (let i = 0; i < Math.floor(str.length / 2); i += 1) {
+    if (str[i] !== str[str.length - 1 - i]) {
+      result = false;
+    }
+  }
+  return result;
 }
 
 /**
@@ -282,15 +289,21 @@ function isPalindrome(/* str */) {
  *  'qwerty', 'Q'     => -1
  *  'qwerty', 'p'     => -1
  */
-function getIndexOf(/* str, letter */) {
-  throw new Error('Not implemented');
+function getIndexOf(str, letter) {
+  let index = -1;
+  for (let i = 0; i < str.length; i += 1) {
+    if (str[i] === letter) {
+      index = i;
+    }
+  }
+  return index;
 }
 
 /**
  * Checks if a number contains a specific digit.
  * In this task, the use of methods of the String and Array classes is not allowed.
  *
- * @param {number} num - The number to check.
+ * @param {number} NUM - The number to check.
  * @param {number} digit - The digit to search for.
  * @return {boolean} True if the number contains the digit, false otherwise.
  *
@@ -301,8 +314,16 @@ function getIndexOf(/* str, letter */) {
  *  12345, 0    => false
  *  12345, 6    => false
  */
-function isContainNumber(/* num, digit */) {
-  throw new Error('Not implemented');
+function isContainNumber(num, digit) {
+  let NUM = num;
+  let result = false;
+  while (NUM > 0) {
+    if (NUM % 10 === digit) {
+      result = true;
+    }
+    NUM = Math.floor(NUM / 10);
+  }
+  return result;
 }
 
 /**
@@ -318,8 +339,31 @@ function isContainNumber(/* num, digit */) {
  *  [2, 3, 9, 5] => 2       => 2 + 3 === 5 then balance element is 9 and its index = 2
  *  [1, 2, 3, 4, 5] => -1   => no balance element
  */
-function getBalanceIndex(/* arr */) {
-  throw new Error('Not implemented');
+function getBalanceIndex(arr) {
+  let index = 1;
+  if (arr.length < 3) {
+    index = -1;
+    return index;
+  }
+
+  let leftHalf = 0;
+  let rightHalf = 0;
+
+  for (let i = 0; i < index; i += 1) {
+    leftHalf += arr[i];
+  }
+  for (let j = index + 1; j < arr.length; j += 1) {
+    rightHalf += arr[j];
+  }
+
+  while (leftHalf !== rightHalf && index < arr.length - 1) {
+    rightHalf -= arr[index + 1];
+    leftHalf += arr[index];
+    index += 1;
+  }
+
+  if (leftHalf !== rightHalf) index = -1;
+  return index;
 }
 
 /**
@@ -344,6 +388,15 @@ function getBalanceIndex(/* arr */) {
  *        ]
  */
 function getSpiralMatrix(/* size */) {
+  // const matrix = [];
+  // const array = [];
+  // for (let i = 0; i < size; i += 1) {
+  //   for (let j = 0; j < size; j += 1) {
+  //     array.push(j);
+  //   }
+  //   matrix.push(array);
+  // }
+  // return matrix;
   throw new Error('Not implemented');
 }
 
