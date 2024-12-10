@@ -387,17 +387,46 @@ function getBalanceIndex(arr) {
  *          [10, 9,  8,  7]
  *        ]
  */
-function getSpiralMatrix(/* size */) {
-  // const matrix = [];
-  // const array = [];
-  // for (let i = 0; i < size; i += 1) {
-  //   for (let j = 0; j < size; j += 1) {
-  //     array.push(j);
-  //   }
-  //   matrix.push(array);
-  // }
-  // return matrix;
-  throw new Error('Not implemented');
+function getSpiralMatrix(size) {
+  const result = [];
+  let array = [];
+  for (let i = 0; i < size; i += 1) {
+    array = [];
+    for (let j = 0; j < size; j += 1) {
+      array[j] = 0;
+    }
+    result[i] = array;
+  }
+
+  let counter = 1;
+  let startCol = 0;
+  let endCol = size - 1;
+  let startRow = 0;
+  let endRow = size - 1;
+
+  while (startCol <= endCol && startRow <= endRow) {
+    for (let i = startCol; i <= endCol; i += 1) {
+      result[startRow][i] = counter;
+      counter += 1;
+    }
+    startRow += 1;
+    for (let j = startRow; j <= endRow; j += 1) {
+      result[j][endCol] = counter;
+      counter += 1;
+    }
+    endCol -= 1;
+    for (let k = endCol; k >= startCol; k -= 1) {
+      result[endRow][k] = counter;
+      counter += 1;
+    }
+    endRow -= 1;
+    for (let l = endRow; l >= startRow; l -= 1) {
+      result[l][startCol] = counter;
+      counter += 1;
+    }
+    startCol += 1;
+  }
+  return result;
 }
 
 /**
@@ -415,8 +444,24 @@ function getSpiralMatrix(/* size */) {
  *    [7, 8, 9]         [9, 6, 3]
  *  ]                 ]
  */
-function rotateMatrix(/* matrix */) {
-  throw new Error('Not implemented');
+function rotateMatrix(matrix) {
+  let left = 0;
+  let right = matrix.length - 1;
+  const rotatedMatrix = matrix;
+  while (left < right) {
+    for (let i = 0; i < right - left; i += 1) {
+      const top = left;
+      const bottom = right;
+      const topLeft = matrix[top][left + i];
+      rotatedMatrix[top][left + i] = matrix[bottom - i][left];
+      rotatedMatrix[bottom - i][left] = matrix[bottom][right - i];
+      rotatedMatrix[bottom][right - i] = matrix[top + i][right];
+      rotatedMatrix[top + i][right] = topLeft;
+    }
+    left += 1;
+    right -= 1;
+  }
+  return rotatedMatrix;
 }
 
 /**
@@ -434,6 +479,28 @@ function rotateMatrix(/* matrix */) {
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
 function sortByAsc(/* arr */) {
+  // const merge = (arrFirst, arrSecond) => {
+  //   const arrSort = [];
+  //   let i = 0;
+  //   let j = 0;
+  //   while (i < arrFirst.length && j < arrSecond.length) {
+  //     arrSort.push(
+  //       arrFirst[i] < arrSecond[j] ? arrFirst[(i += 1)] : arrSecond[(j += 1)]
+  //     );
+  //   }
+  //   return [...arrSort, ...arrFirst.slice(i), ...arrSecond.slice(j)];
+  // };
+  // const mergeSort = (notsortedarray) => {
+  //   if (notsortedarray.length <= 1) {
+  //     return notsortedarray;
+  //   }
+  //   const middle = Math.floor(notsortedarray.length / 2);
+  //   const arrLeft = notsortedarray.slice(0, middle);
+  //   const arrRight = notsortedarray.slice(middle);
+  //   return merge(mergeSort(arrLeft), mergeSort(arrRight));
+  // };
+  // console.log(mergeSort(arr));
+  // return mergeSort(arr);
   throw new Error('Not implemented');
 }
 
