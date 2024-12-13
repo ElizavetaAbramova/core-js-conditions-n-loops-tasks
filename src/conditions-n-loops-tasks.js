@@ -587,14 +587,67 @@ function shuffleChar(str, iterations) {
  * 12344    => 12434
  * 123440   => 124034
  * 1203450  => 1203504
- * 90822    => 92028
- * 321321   => 322113
+ * 90822   => 92028
+ * 321321  => 322113
  *
  * @param {number} number The source number
  * @returns {number} The nearest larger number, or original number if none exists.
  */
-function getNearestBigger(/* number */) {
-  throw new Error('Not implemented');
+function getNearestBigger(number) {
+  let numberStr = [...String(number)];
+  function changeDigits(substr) {
+    const change = substr;
+    const base = Number(change[0]);
+    let closestMax = base;
+    let index = 0;
+    for (let i = 1; i < change.length; i += 1) {
+      if (closestMax === base && Number(change[i]) > base) {
+        closestMax = Number(change[i]);
+        index = i;
+      }
+      if (Number(change[i]) > base && Number(change[i]) < closestMax) {
+        closestMax = Number(change[i]);
+        index = i;
+      }
+    }
+
+    if (index === 0) {
+      return change;
+    }
+
+    let restNumbers = Array(change.length - 1);
+    let restNumIndex = 0;
+    for (let i = 0; i < change.length; i += 1) {
+      if (i !== index) {
+        restNumbers[restNumIndex] = Number(change[i]);
+        restNumIndex += 1;
+      }
+    }
+
+    restNumbers = sortByAsc(restNumbers);
+
+    let result = `${closestMax}`;
+    for (let i = 0; i < restNumbers.length; i += 1) {
+      result = `${result}${restNumbers[i]}`;
+    }
+
+    return result;
+  }
+
+  let sub = '';
+  for (let i = numberStr.length - 1; i >= 0; i -= 1) {
+    sub = `${numberStr[i]}${sub}`;
+    const rightHalf = changeDigits(sub);
+    if (sub !== rightHalf) {
+      let leftHalf = '';
+      for (let j = 0; j < i; j += 1) {
+        leftHalf = `${leftHalf}${numberStr[j]}`;
+      }
+      numberStr = `${leftHalf}${rightHalf}`;
+      break;
+    }
+  }
+  return Number(numberStr);
 }
 
 module.exports = {
