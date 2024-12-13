@@ -478,30 +478,67 @@ function rotateMatrix(matrix) {
  *  [2, 9, 5, 9]    => [2, 5, 9, 9]
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
-function sortByAsc(/* arr */) {
-  // const merge = (arrFirst, arrSecond) => {
-  //   const arrSort = [];
-  //   let i = 0;
-  //   let j = 0;
-  //   while (i < arrFirst.length && j < arrSecond.length) {
-  //     arrSort.push(
-  //       arrFirst[i] < arrSecond[j] ? arrFirst[(i += 1)] : arrSecond[(j += 1)]
-  //     );
-  //   }
-  //   return [...arrSort, ...arrFirst.slice(i), ...arrSecond.slice(j)];
-  // };
-  // const mergeSort = (notsortedarray) => {
-  //   if (notsortedarray.length <= 1) {
-  //     return notsortedarray;
-  //   }
-  //   const middle = Math.floor(notsortedarray.length / 2);
-  //   const arrLeft = notsortedarray.slice(0, middle);
-  //   const arrRight = notsortedarray.slice(middle);
-  //   return merge(mergeSort(arrLeft), mergeSort(arrRight));
-  // };
-  // console.log(mergeSort(arr));
-  // return mergeSort(arr);
-  throw new Error('Not implemented');
+function sortByAsc(arr) {
+  const res = arr;
+  function merge(left, right) {
+    const result = Array(left.length + right.length);
+    let i = 0;
+    let j = 0;
+    let k = 0;
+    while (i < left.length && j < right.length) {
+      if (left[i] < right[j]) {
+        result[k] = left[i];
+        i += 1;
+      } else {
+        result[k] = right[j];
+        j += 1;
+      }
+      k += 1;
+    }
+
+    while (i < left.length) {
+      result[k] = left[i];
+      i += 1;
+      k += 1;
+    }
+
+    while (j < right.length) {
+      result[k] = right[j];
+      j += 1;
+      k += 1;
+    }
+
+    return result;
+  }
+
+  function mergeSort(array) {
+    const half = Math.floor(array.length / 2);
+    if (array.length < 2) return array;
+
+    const left = Array(half);
+    const right = Array(array.length - half);
+
+    for (let i = 0; i < half; i += 1) {
+      left[i] = array[i];
+    }
+
+    for (let i = half; i < array.length; i += 1) {
+      right[i - half] = array[i];
+    }
+
+    const leftSorted = mergeSort(left);
+    const rightSorted = mergeSort(right);
+
+    return merge(leftSorted, rightSorted);
+  }
+
+  const sorted = mergeSort(arr);
+
+  for (let i = 0; i < sorted.length; i += 1) {
+    res[i] = sorted[i];
+  }
+
+  return res;
 }
 
 /**
@@ -521,8 +558,22 @@ function sortByAsc(/* arr */) {
  *  '012345', 3 => '024135' => '043215' => '031425'
  *  'qwerty', 3 => 'qetwry' => 'qtrewy' => 'qrwtey'
  */
-function shuffleChar(/* str, iterations */) {
-  throw new Error('Not implemented');
+function shuffleChar(str, iterations) {
+  let result = str;
+  for (let i = 1; i <= iterations; i += 1) {
+    let odd = '';
+    let even = '';
+    for (let j = 0; j < str.length; j += 1) {
+      if (j % 2 === 0) {
+        even += result[j];
+      } else odd += result[j];
+    }
+    result = `${even}${odd}`;
+    if (result === str) {
+      return shuffleChar(str, iterations % i);
+    }
+  }
+  return result;
 }
 
 /**
